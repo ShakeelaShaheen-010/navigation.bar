@@ -1,0 +1,94 @@
+import React,{Component} from 'react';
+import {
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  TextInput,
+  Button,
+  View,
+  Text,
+  StatusBar,
+} from 'react-native';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import {
+  Header,
+  LearnMoreLinks,
+  Colors,
+  DebugInstructions,
+  ReloadInstructions,
+} from 'react-native/Libraries/NewAppScreen';
+
+
+class mainpage extends Component{
+  
+  constructor(props) {
+        super(props);
+    this.state = {
+    email: "",
+    name: "",
+    Password:""
+  };    
+  }
+  isFormValid = () => {
+    const {email,name,Password} = this.state
+  
+    return  email && Password && name
+  }
+ 
+  render(){
+    let {email,name,Password}=this.state;
+   return(
+     <View style={{flex:1, flex:1,justifyContent:'center'}}>
+       <View style={{flex:2}}></View>
+         <View style={{flex:2.5,backgroundColor:'#32a8a4',paddingTop:50}}>
+         <TextInput autoFocus maxLength={15} placeholder='Email' onChangeText={(email)=>{this.setState({email:email})}} autoFocus value={this.state.email} style={{marginLeft:20,marginRight:20, borderColor:'black',borderBottomWidth:1}}></TextInput>
+           <TextInput maxLength={15} placeholder='UserName' onChangeText={(username)=>{this.setState({name:username})}}  value={this.state.name} style={{marginLeft:20,marginRight:20, borderColor:'black',borderBottomWidth:1}}></TextInput>
+          <TextInput keyboardType='numeric' secureTextEntry={true} onChangeText={(Password) => { this.setState({ Password: Password})}} value={this.state.Password}  placeholder='Password'style={{marginLeft:20,marginRight:20, borderColor:'black',borderBottomWidth:1}}></TextInput>
+          <View style={[{ width:"70%" , margin: 19,flexDirection:'row',justifyContent:'space-between' }]}><Button color="green" title='Login' onPress={()=> this.props.navigation.navigate('Home')}></Button> 
+          <Button color="green" disabled={!this.isFormValid} onPress={()=> this.props.navigation.navigate('Signup')}  title='Sign Up'></Button>  
+       </View> 
+       
+        </View>
+        <View style={{flex:2}}></View>
+     </View>
+   );
+
+  }
+}
+class Home extends Component{
+  
+  render(){
+    return(
+      <View>
+        <Text>Welcome to home page.</Text>
+      </View>
+    );
+  }
+}
+
+class Signup extends Component{
+  static navigationOptions = {
+    title: 'Profile',
+  };
+  render(){
+    return(
+      <View>
+        <Text>Welcome to Profile page.</Text>
+      </View>
+    );
+  }
+}
+
+const Appnavigat=createStackNavigator(
+  {
+    mainpage:mainpage,
+    Signup:Signup,
+    Home:Home,
+    
+  }
+);
+
+const Appcontainer= createAppContainer(Appnavigat);
+
+export default Appcontainer;
